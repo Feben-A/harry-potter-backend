@@ -54,8 +54,58 @@ app.delete("/characters/:name", (req, res) => {
   }
 });
 
+app.patch("/characters/:name", (req, res) => {
+  const name = req.params.name.toLowerCase();
+  const character = characters.find(
+    (character) => character.name.toLowerCase() == name
+  );
+  const newCharacterName = req.body.name;
+
+  if (character == undefined) {
+    res.status(404).send("The character does not exist");
+  } else {
+    character.name = newCharacterName;
+    res.status(200).send(character);
+  }
+});
+
+/* 
+
+app.patch("/characters/:name"),
+  (req, res) => {
+    const name = req.params.name.toLowerCase();
+    const character = characters.find(
+      (character) => character.name.toLowerCase() == name
+    );
+    const newCharacterName = req.body.name;
+
+    if (character == undefined) {
+      res.status(404).send("The character does not exist");
+    } else {
+      character.name = newCharacterName;
+      res.status(200).send(character);
+    }
+  };
+
+
+  
+app.patch(".characters/:id, (req, res) => {
+  let character = characters.find((character) => character.id == req.params.id);
+
+  if(!character) return res.sendStatus(404);
+
+  character = {
+    ...character,
+    ...req.body,
+  };
+
+
+  res.send(character);
+}
+  
+  
+  */
+
 app.listen(port, () => {
   console.log(`The app is listening on port ${port}`);
 });
-
-app.post;
